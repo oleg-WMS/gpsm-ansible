@@ -1,0 +1,18 @@
+---
+- name: Install iperf3 on CentOS 6
+  hosts: all
+  become: true
+  tasks:
+    - name: Install iperf3
+      yum:
+        name: iperf3
+        state: present
+
+    - name: Verify iperf3 installation
+      command: iperf3 --version
+      register: iperf3_version
+      ignore_errors: yes
+
+    - name: Display iperf3 version
+      debug:
+        msg: "{{ iperf3_version.stdout }}"
